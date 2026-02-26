@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance Projection & House Affordability Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Finance Projection & House Affordability Planner</h1>
+        <p>
+          Upload your compensation and investment data, tune stress-test assumptions, and explore
+          how much home you can afford.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>1) Compensation Inputs</h2>
+        <div class="grid two">
+          <label>
+            Current annual salary ($)
+            <input id="salary" type="number" min="0" step="1000" value="220000" />
+          </label>
+          <label>
+            Expected annual bonus ($)
+            <input id="bonus" type="number" min="0" step="1000" value="40000" />
+          </label>
+          <label>
+            Deferred compensation vesting this year ($)
+            <input id="deferred" type="number" min="0" step="1000" value="25000" />
+          </label>
+          <label>
+            Starting liquid savings ($)
+            <input id="savings" type="number" min="0" step="1000" value="180000" />
+          </label>
+        </div>
+        <p class="hint">
+          Optional upload (CSV or JSON with year,salary,bonus,deferred columns):
+          <input id="compUpload" type="file" accept=".csv,.json" />
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>2) Investment Mix</h2>
+        <div class="grid three">
+          <label>
+            Equity allocation (%)
+            <input id="equityMix" type="number" min="0" max="100" value="70" />
+          </label>
+          <label>
+            Bond/Cash allocation (%)
+            <input id="bondMix" type="number" min="0" max="100" value="30" />
+          </label>
+          <label>
+            Expected base portfolio return (%)
+            <input id="portfolioReturn" type="number" step="0.1" value="5.8" />
+          </label>
+        </div>
+        <p class="hint">
+          Optional upload (CSV or JSON with asset,weight):
+          <input id="mixUpload" type="file" accept=".csv,.json" />
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>3) Stress-Test Scenario Controls</h2>
+        <div class="grid three">
+          <label>
+            Projection years
+            <input id="years" type="number" min="1" max="40" value="10" />
+          </label>
+          <label>
+            Income growth (%)
+            <input id="incomeGrowth" type="number" step="0.1" value="3.0" />
+          </label>
+          <label>
+            Effective tax rate (%)
+            <input id="taxRate" type="number" min="0" max="60" step="0.1" value="34" />
+          </label>
+          <label>
+            Annual spending ($)
+            <input id="annualSpend" type="number" min="0" step="1000" value="110000" />
+          </label>
+          <label>
+            Equity price shock (%)
+            <input id="equityShock" type="number" step="0.1" value="-12" />
+          </label>
+          <label>
+            Shock year (1 = first year)
+            <input id="shockYear" type="number" min="1" max="40" value="2" />
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4) House & Mortgage Assumptions</h2>
+        <div class="grid three">
+          <label>
+            Mortgage rate (%)
+            <input id="mortgageRate" type="number" step="0.01" value="6.5" />
+          </label>
+          <label>
+            Mortgage term (years)
+            <input id="mortgageTerm" type="number" min="10" max="40" value="30" />
+          </label>
+          <label>
+            Target DTI cap (%)
+            <input id="dtiCap" type="number" min="1" max="60" value="35" />
+          </label>
+          <label>
+            Down payment ratio (%)
+            <input id="downPaymentPct" type="number" min="0" max="100" value="20" />
+          </label>
+          <label>
+            Property tax + insurance (% of home value)
+            <input id="ptiPct" type="number" step="0.01" value="1.4" />
+          </label>
+          <label>
+            Candidate mortgage size ($)
+            <input id="candidateMortgage" type="number" min="0" step="10000" value="800000" />
+          </label>
+        </div>
+        <button id="runBtn">Run Projection</button>
+      </section>
+
+      <section class="card">
+        <h2>Results</h2>
+        <div id="summary" class="summary"></div>
+        <canvas id="trendChart" width="880" height="280" aria-label="Net worth trend chart"></canvas>
+        <div class="tableWrap">
+          <table id="projectionTable">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Gross Income</th>
+                <th>After Tax</th>
+                <th>Spending</th>
+                <th>Invest. Return</th>
+                <th>Ending Net Worth</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
